@@ -1,3 +1,6 @@
-from ConnnBD import *
+from Usuarios import *
 
-print(obtener_nombre_usuario_desde_BD("vascor.pablo@gmail.com"))
+nuevo_usuario = Usuario("peo@gmail.com", "1234")
+usuarios.extend([nuevo_usuario])
+for usuario in usuarios:
+    print(usuario)

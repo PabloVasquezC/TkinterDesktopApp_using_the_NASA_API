@@ -1,3 +1,4 @@
+from ConnnBD import *
 from Login import *
 from Usuarios import *
 
@@ -14,13 +15,13 @@ window = tk.Tk()
 window.title("Login")
 
 # Descargar la imagen desde la URL
-url = "https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+url = "https://images.unsplash.com/photo-1606125784258-570fc63c22c1?q=80&w=1522&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
 response = requests.get(url)
 image_data = response.content
 
 # Abrir la imagen con Pillow
 image = Image.open(BytesIO(image_data))
-image = image.resize((800, 550), Image.ANTIALIAS)
+image = image.resize((800, 500), Image.ANTIALIAS)
 
 # Convertir la imagen a un formato compatible con tkinter
 tk_image = ImageTk.PhotoImage(image)
@@ -55,12 +56,20 @@ entry_password.grid(row=3, column=0)
 button_login = tk.Button(login_frame, text="Login", command=login, bg="green", fg="white")
 button_login.grid(row=4, column=0, pady=(20, 0))
 
+# Crear el botón para abrir la ventana de registro de usuarios
+button_registro = tk.Button(login_frame, text="Crear Usuario", command=open_registro_window, bg="blue", fg="white")
+button_registro.grid(row=7, column=0, pady=(10, 0))
+
 # Crear la etiqueta de resultado
 label_result = tk.Label(login_frame, text="", bg="#000000", fg="white")
 label_result.grid(row=5, column=0)
 
+
+label_result_registro = tk.Label(login_frame, text="", bg="#000000", fg="white")
+label_result_registro.grid(row=5, column=2)
+
 # Configurar el tamaño y centrar la ventana
-window.geometry("800x550")
+window.geometry("500x500")
 window.eval('tk::PlaceWindow . center')
 
 # Iniciar el bucle principal

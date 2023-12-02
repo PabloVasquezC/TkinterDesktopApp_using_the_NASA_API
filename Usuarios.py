@@ -12,17 +12,21 @@ class Usuario:
                 return True
         return False
 
-
-
-pablo = Usuario("vascor.pablo@gmail.com", "CATA.7531")
-nicolas = Usuario("nicolas.riquelme40@inacapmail.cl", "NICOLAS.1234")
-ester = Usuario("ester.godoy@inacapmail.cl", "ESTER.1234")
-
 # Crear la lista de usuarios antes de la instancia
-usuarios = [pablo, nicolas, ester]
+usuarios = []
+
+def agregar_usuarios():
+    pablo = Usuario("vascor.pablo@gmail.com", "CATA.7531")
+    nicolas = Usuario("nicolas.riquelme40@inacapmail.cl", "NICOLAS.1234")
+    ester = Usuario("ester.godoy@inacapmail.cl", "ESTER.1234")
+
+    # Agregar usuarios a la lista
+    usuarios.extend([pablo, nicolas, ester])
+
+# Llamar a la función para agregar usuarios cuando se importa el módulo
+agregar_usuarios()
 
 
-for i in usuarios:
-    print(i)
+
 
     
