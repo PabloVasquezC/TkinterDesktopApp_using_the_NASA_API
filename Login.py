@@ -9,6 +9,7 @@ from ConnWithNasaApi import *
 from tkinter import simpledialog
 
 
+
 # Declarar una variable global para almacenar el email
 global_email = ""
 registro_window = None
@@ -62,7 +63,7 @@ def open_registro_window():
     entry_contrasena_registro.grid(row=3, column=1)
 
     # Botón para registrar al usuario
-    btn_registro = tk.Button(registro_frame, text="Registrarse", command=lambda: registrar_usuario(entry_nombre.get(), entry_apellido.get(), entry_email_registro.get(), entry_contrasena_registro.get()))
+    btn_registro = tk.Button(registro_frame, text="Registrarse", command=lambda: registrar_usuario(entry_nombre.get(), entry_email_registro.get(), entry_contrasena_registro.get(), entry_apellido.get()))
     btn_registro.grid(row=4, columnspan=2, pady=10)
 
 # Función para registrar un nuevo usuario
@@ -130,8 +131,6 @@ def open_main_window():
     button2 = tk.Button(nav_frame, text="Ver la foto de un dia X", command=solicitar_fecha)
     button2.pack(pady=10)
 
-    button3 = tk.Button(nav_frame, text="Botón 3", command=funcion_boton3)
-    button3.pack(pady=10)
 
     # Crear un Label de bienvenida para el nombre de usuario
     global label_welcome
@@ -167,10 +166,7 @@ def open_main_window():
 
 
 
-import tkinter as tk
-from tkinter import ttk
-from PIL import Image, ImageTk
-from ConnWithNasaApi import obtener_datos_foto_del_dia  # Importa la función desde tu archivo
+
 
 # Resto de tu código...
 
@@ -200,7 +196,7 @@ def ver_foto_del_dia():
         tk_imagen = ImageTk.PhotoImage(imagen)
 
         # Actualizar las etiquetas con los nuevos datos
-        label_welcome.config(text=f"La foto del día: {titulo}")
+        label_welcome.config(text=f"La foto del día es: {titulo}")
         label_foto_del_dia.config(image=tk_imagen)
         label_foto_del_dia.image = tk_imagen  # Evita que el recolector de basura elimine la imagen
         label_descripcion.config(text=descripcion)
@@ -253,8 +249,6 @@ def ver_foto_segun_fecha(fecha):
     else:
         print("Error al obtener los datos de la foto del día")
 
-def funcion_boton3():
-    print("Botón 3 presionado")
 
 
 

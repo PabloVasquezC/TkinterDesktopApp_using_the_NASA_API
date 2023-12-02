@@ -1,6 +1,4 @@
-from Usuarios import *
+from ConnnBD import *
 
-nuevo_usuario = Usuario("peo@gmail.com", "1234")
-usuarios.extend([nuevo_usuario])
-for usuario in usuarios:
-    print(usuario)
+agregar_usuario_a_BD("pepe","pepe@gmail.com","1234","perez")
+mostrar_todos_los_usuarios()

@@ -38,4 +38,17 @@ def mostrar_todos_los_usuarios():
     except sqlite3.Error as e:
         print(f"Error en la consulta a la base de datos: {e}")
         
+def eliminar_usuario_de_BD(id):
+    try:
+        # Utilizar with para manejar la conexión y el cursor
+        with sqlite3.connect('C:\\Users\\Casa\\Desktop\\AppUsers.db') as conexion:
+            cursor = conexion.cursor()
+            cursor.execute('DELETE FROM usuarios WHERE id = ?', (id,))
+            conexion.commit()
+            print("Usuario eliminado de la base de datos")
+    except sqlite3.Error as e:
+        print(f"Error en la consulta a la base de datos: {e}")                
 
+  
+
+mostrar_todos_los_usuarios()
