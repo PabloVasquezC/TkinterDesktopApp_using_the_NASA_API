@@ -1,3 +1,5 @@
+# Modulo Principal de la aplicación
+
 from ConnnBD import *
 from Login import *
 from Usuarios import *

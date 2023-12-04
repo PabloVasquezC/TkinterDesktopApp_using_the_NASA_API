@@ -1,5 +1,11 @@
+# Archivo que gestiona la conexiín con la base de datos
+
+
+# importamos el modulo de sqlite3
 import sqlite3
 
+
+# función para obtener nomre de usuario desde la base de datos
 def obtener_nombre_usuario_desde_BD(email):
     try:
         # Utilizar with para manejar la conexión y el cursor
@@ -13,8 +19,8 @@ def obtener_nombre_usuario_desde_BD(email):
     except sqlite3.Error as e:
         print(f"Error en la consulta a la base de datos: {e}")
         return None
-    
-    
+
+# función para agregar usuarios a la base de datos
 def agregar_usuario_a_BD(nombre, email, contrasena, apellido):
     try:
         # Utilizar with para manejar la conexión y el cursor
@@ -25,7 +31,9 @@ def agregar_usuario_a_BD(nombre, email, contrasena, apellido):
             print("Usuario agregado a la base de datos")
     except sqlite3.Error as e:
         print(f"Error en la consulta a la base de datos: {e}") 
-        
+
+
+# función para mostrar todos los usuarios de la base de datos      
 def mostrar_todos_los_usuarios():
     try:
         # Utilizar with para manejar la conexión y el cursor
@@ -37,7 +45,9 @@ def mostrar_todos_los_usuarios():
                 print(usuario)
     except sqlite3.Error as e:
         print(f"Error en la consulta a la base de datos: {e}")
-        
+
+
+# función para eliminar un usuario de la base de datos      
 def eliminar_usuario_de_BD(id):
     try:
         # Utilizar with para manejar la conexión y el cursor
@@ -49,6 +59,5 @@ def eliminar_usuario_de_BD(id):
     except sqlite3.Error as e:
         print(f"Error en la consulta a la base de datos: {e}")                
 
-  
 
-mostrar_todos_los_usuarios()
+

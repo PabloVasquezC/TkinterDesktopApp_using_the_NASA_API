@@ -1,3 +1,5 @@
+# Archivo donde se crea la clase Usuario y se instancias los usuarios, además de la lista de usuarios y las funciones para agregar usuarios a la lista  
+
 class Usuario:
     def __init__(self, email, contrasena):
         self.email = email
@@ -15,6 +17,7 @@ class Usuario:
 # Crear la lista de usuarios antes de la instancia
 usuarios = []
 
+# funcion para agregar usuarios a la lista
 def agregar_usuarios():
     pablo = Usuario("vascor.pablo@gmail.com", "CATA.7531")
     nicolas = Usuario("nicolas.riquelme40@inacapmail.cl", "NICOLAS.1234")

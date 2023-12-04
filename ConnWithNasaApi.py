@@ -1,7 +1,10 @@
-# En tu archivo de conexión con la API (ConnWithNasaApi.py)
+# Archivo que contiene las funciones para conectarse a la API de la NASA
 
+# importamos el modulo requests para realizar solicitudes HTTP
 import requests
 
+
+# función para obtener los datos de la foto del día
 def obtener_datos_foto_del_dia(api_key):
     url = "https://api.nasa.gov/planetary/apod"
 
@@ -18,6 +21,8 @@ def obtener_datos_foto_del_dia(api_key):
         print("Error al conectarse a la API de la NASA")
         return None
 
+
+# función para obtener los datos de la foto del día según una fecha específica
 def obtener_foto_del_dia_segun_fecha(api_key, fecha):
     url = "https://api.nasa.gov/planetary/apod"
     

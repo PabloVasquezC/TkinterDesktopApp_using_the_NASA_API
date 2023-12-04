@@ -1,3 +1,5 @@
+# Modulo del login
+
 import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk
@@ -10,7 +12,7 @@ from tkinter import simpledialog
 
 
 
-# Declarar una variable global para almacenar el email
+# variables globales 
 global_email = ""
 registro_window = None
 
@@ -75,7 +77,8 @@ def registrar_usuario(nombre, email, contrasena, apellido):
     usuarios.extend([nuevo_usuario])
     label_result_registro.config(text="Registro exitoso", fg="green")
     window.after(1500, destroy_open_registro_window)
-    
+
+# funcion para destrior la ventana de registro una vez que se registra un usuario    
 def destroy_open_registro_window():
     registro_window.destroy()
 
@@ -84,6 +87,7 @@ def destroy_login_window():
     window.destroy()
     open_main_window()
 
+# Función para abrir la ventana principal
 def open_main_window():
     # Obtener el nombre de usuario desde la base de datos
     nombre_usuario = obtener_nombre_usuario_desde_BD(global_email)
@@ -107,7 +111,7 @@ def open_main_window():
 
     # Abrir la imagen con Pillow y ajustar al tamaño de la ventana principal
     image_background = Image.open(BytesIO(image_data_background))
-    image_background = image_background.resize((width, height), Image.ANTIALIAS)
+    image_background = image_background.resize((width, height))
 
     # Convertir la imagen a un formato compatible con tkinter
     tk_image_background = ImageTk.PhotoImage(image_background)
@@ -145,7 +149,7 @@ def open_main_window():
     Al costado derecho encontrarás una serie de funcionalidades
     de las cuales te provee nuestra aplicación
 
-    con PlanaryApp explorar el universo está al alcance de un clic!""", font=("Helvetica", 20), fg="white", bg="#000000")
+    con PlanaryApp explorar el universo está al alcance de un click!""", font=("Helvetica", 20), fg="white", bg="#000000")
     label_welcome.pack(pady=20)
 
     # Crear un Label para la foto del día
@@ -168,8 +172,8 @@ def open_main_window():
 
 
 
-# Resto de tu código...
 
+# funcion para ver la foto del dia
 def ver_foto_del_dia():
     # Obtener los datos de la foto del día desde la API de la NASA
     api_key = "HLFsRfhi3gr2qxHdowAo6rjIr3xjUHtCdtcaDCk6"  # Coloca aquí tu clave de API
@@ -179,33 +183,37 @@ def ver_foto_del_dia():
     if data:
         # Obtener el título, la URL de la imagen y la descripción
         titulo = data['title']
-        url_imagen = data['hdurl']
+        url_imagen = data['url']
         descripcion = data.get('explanation', 'No hay descripción disponible.')
 
-        # Obtener la imagen desde la URL
-        response_imagen = requests.get(url_imagen)
-        image_data = response_imagen.content
+        try:
+            # Obtener la imagen desde la URL
+            response_imagen = requests.get(url_imagen)
+            response_imagen.raise_for_status()  # Verificar si la descarga fue exitosa
+            image_data = response_imagen.content
 
-        # Abrir la imagen con Pillow
-        imagen = Image.open(BytesIO(image_data))
+            # Abrir la imagen con Pillow
+            imagen = Image.open(BytesIO(image_data))
 
-        # Ajustar la imagen al tamaño deseado (ancho, alto)
-        imagen = imagen.resize((400, 400), Image.ANTIALIAS)
+            # Ajustar la imagen al tamaño deseado (ancho, alto)
+            imagen = imagen.resize((400, 400))
 
-        # Convertir la imagen a un formato compatible con tkinter
-        tk_imagen = ImageTk.PhotoImage(imagen)
+            # Convertir la imagen a un formato compatible con tkinter
+            tk_imagen = ImageTk.PhotoImage(imagen)
 
-        # Actualizar las etiquetas con los nuevos datos
-        label_welcome.config(text=f"La foto del día es: {titulo}")
-        label_foto_del_dia.config(image=tk_imagen)
-        label_foto_del_dia.image = tk_imagen  # Evita que el recolector de basura elimine la imagen
-        label_descripcion.config(text=descripcion)
-
+            # Actualizar las etiquetas con los nuevos datos
+            label_welcome.config(text=f"La foto del día es: {titulo}")
+            label_foto_del_dia.config(image=tk_imagen)
+            label_foto_del_dia.image = tk_imagen  # Evita que el recolector de basura elimine la imagen
+            label_descripcion.config(text=descripcion)
+        except requests.exceptions.RequestException as e:
+            print(f"Error al descargar la imagen: {e}")
+            label_result.config(text="Error al descargar la imagen", fg="red")
     else:
         print("Error al obtener los datos de la foto del día")
 
-# Resto de tu código...
 
+# funcion para solicitar una fecha y ver la foto del dia de esa fecha
 def solicitar_fecha():
     # Crear una nueva ventana de diálogo para la entrada de fecha
     fecha = tk.simpledialog.askstring("Ingresar fecha", "Ingrese la fecha (YYYY-MM-DD):")
@@ -224,7 +232,7 @@ def ver_foto_segun_fecha(fecha):
     if data:
         # Obtener el título, la URL de la imagen y la descripción
         titulo = data['title']
-        url_imagen = data['hdurl']
+        url_imagen = data['url']
         descripcion = data.get('explanation', 'No hay descripción disponible.')
 
         # Obtener la imagen desde la URL
@@ -235,7 +243,7 @@ def ver_foto_segun_fecha(fecha):
         imagen = Image.open(BytesIO(image_data))
 
         # Ajustar la imagen al tamaño deseado (ancho, alto)
-        imagen = imagen.resize((400, 400), Image.ANTIALIAS)
+        imagen = imagen.resize((400, 400))
 
         # Convertir la imagen a un formato compatible con tkinter
         tk_imagen = ImageTk.PhotoImage(imagen)
@@ -252,7 +260,7 @@ def ver_foto_segun_fecha(fecha):
 
 
 
-# Resto del código...
+
 
 
 
@@ -276,7 +284,7 @@ image_data = response.content
 
 # Abrir la imagen con Pillow y ajustar al tamaño de la ventana principal
 image = Image.open(BytesIO(image_data))
-image = image.resize((800, 500), Image.ANTIALIAS)
+image = image.resize((800, 500))
 
 # Convertir la imagen a un formato compatible con tkinter
 tk_image = ImageTk.PhotoImage(image)
