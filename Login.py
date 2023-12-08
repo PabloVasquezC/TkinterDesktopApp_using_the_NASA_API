@@ -5,11 +5,10 @@ from tkinter import ttk
 from PIL import Image, ImageTk
 import requests
 from io import BytesIO  
-from Usuarios import *
 from ConnnBD import *
 from ConnWithNasaApi import *
 from tkinter import simpledialog
-
+from Usuarios import *
 
 
 # variables globales 
@@ -19,18 +18,18 @@ registro_window = None
 # Función de inicio de sesión
 def login():
     global global_email  # Indicar que estamos utilizando la variable global_email
-    email = entry_username.get()
-    contrasena = entry_password.get()
+    email_login = entry_username.get()
+    contrasena_login = entry_password.get()
     
     login_correcto = False
-    for i in usuarios:
-        if i.validar_usuario(email, contrasena):
-            login_correcto = True
-            break
+    # for i in usuarios:
+    if validar_usuario_desde_BD(email_login, contrasena_login):
+        login_correcto = True
+        
 
     if login_correcto:
         label_result.config(text="Login correcto", fg="green")
-        global_email = email  # Almacenar el email como variable global
+        global_email = email_login  # Almacenar el email como variable global
         # Destruir la ventana actual después de un breve retraso
         window.after(1500, destroy_login_window)
     else:
@@ -56,7 +55,7 @@ def open_registro_window():
     entry_apellido = tk.Entry(registro_frame)
     entry_apellido.grid(row=1, column=1)
 
-    tk.Label(registro_frame, text="Email:").grid(row=2, column=0, pady=(0, 5))
+    tk.Label(registro_frame, text="Email/Rol:").grid(row=2, column=0, pady=(0, 5))
     entry_email_registro = tk.Entry(registro_frame)
     entry_email_registro.grid(row=2, column=1)
 
@@ -150,7 +149,7 @@ def open_main_window():
     de las cuales te provee nuestra aplicación
 
     con PlanaryApp explorar el universo está al alcance de un click!""", font=("Helvetica", 20), fg="white", bg="#000000")
-    label_welcome.pack(pady=20)
+    label_welcome.pack(pady=10)
 
     # Crear un Label para la foto del día
     global label_foto_del_dia
@@ -308,7 +307,7 @@ label_title = ttk.Label(login_frame, text="PlanetaryApp", font=("Helvetica", 24,
 label_title.grid(row=0, column=0, pady=(0, 20))
 
 # Crear la etiqueta de nombre de usuario y la entrada
-label_username = tk.Label(login_frame, text="Email:", bg="#000000", fg="white")
+label_username = tk.Label(login_frame, text="Email/Rol:", bg="#000000", fg="white")
 label_username.grid(row=1, column=0, pady=(0, 5))
 entry_username = tk.Entry(login_frame)
 entry_username.grid(row=2, column=0)
