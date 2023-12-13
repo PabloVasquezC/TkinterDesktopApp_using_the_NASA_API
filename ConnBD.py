@@ -1,11 +1,12 @@
-# Archivo que gestiona la conexiín con la base de datos
+# Archivo que gestiona la conexión con la base de datos
 
 
 # importamos el modulo de sqlite3
 import sqlite3
 
 
-# función para obtener nomre de usuario desde la base de datos
+
+# función para obtener nombre de usuario desde la base de datos
 def obtener_nombre_usuario_desde_BD(email):
     try:
         # Utilizar with para manejar la conexión y el cursor
@@ -84,7 +85,19 @@ def validar_usuario_desde_BD(email, contrasena):
         print(f"Error al conectar con la base de datos: {e}")
         return None            
     
-print(mostrar_todos_los_usuarios())    
 
+# función para obtener nombre de usuario desde la base de datos
+def ejecutar_query_a_la_BD(email):
+    try:
+        # Utilizar with para manejar la conexión y el cursor
+        with sqlite3.connect('./AppUsers.db') as conexion:
+            cursor = conexion.cursor()
+            cursor.execute('CREATE TABLE GUARDADO')
+            nombre = cursor.fetchone()
+
+            print("Query ejecutada con éxito")
+    except sqlite3.Error as e:
+        print(f"Error en la consulta a la base de datos: {e}")
+        return None
 
 

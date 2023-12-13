@@ -1,11 +1,11 @@
 # Archivo que contiene las funciones para conectarse a la API de la NASA
 
-# importamos el modulo requests para realizar solicitudes HTTP
+# Importamos el modulo requests
 import requests
 
 
-# función para obtener los datos de la foto del día
-def obtener_datos_foto_del_dia(api_key):
+# función para obtener los datos del recurso A.P.O.D(astronomic picture of the day)
+def obtener_datos_apod(api_key):
     url = "https://api.nasa.gov/planetary/apod"
 
     params = {

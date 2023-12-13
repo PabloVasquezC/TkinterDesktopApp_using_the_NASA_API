@@ -5,8 +5,8 @@ from tkinter import ttk
 from PIL import Image, ImageTk
 import requests
 from io import BytesIO  
-from ConnnBD import *
-from ConnWithNasaApi import *
+from ConnBD import *
+from ConnNasaApi import *
 from tkinter import simpledialog
 from Usuarios import *
 
@@ -35,37 +35,45 @@ def login():
     else:
         label_result.config(text="Login incorrecto", fg="red")
 
+
 # Función para abrir la ventana de registro de usuarios
 def open_registro_window():
-    global global_email, registro_window  # Indicar que estamos utilizando la variable global_email
+    global global_email, registro_window  
     registro_window = tk.Toplevel(window)
     
     registro_window.title("Registro de Usuario")
 
-    # Crear un contenedor para el formulario de registro
-    registro_frame = tk.Frame(registro_window, padx=20, pady=20)
+    # Crear un contenedor para el formulario de registro con fondo negro
+    registro_frame = tk.Frame(registro_window, padx=45, pady=90, bg="#000000")
     registro_frame.pack()
 
-    # Etiquetas y entradas para los datos del usuario
-    tk.Label(registro_frame, text="Nombre:").grid(row=0, column=0, pady=(0, 5))
+    # Etiquetas y entradas para los datos del usuario con fondo negro y texto blanco
+    tk.Label(registro_frame, text="Nombre:", bg="#000000", fg="white").grid(row=0, column=0, pady=(0, 5))
     entry_nombre = tk.Entry(registro_frame)
     entry_nombre.grid(row=0, column=1)
 
-    tk.Label(registro_frame, text="Apellido:").grid(row=1, column=0, pady=(0, 5))
+    tk.Label(registro_frame, text="Apellido:", bg="#000000", fg="white").grid(row=1, column=0, pady=(0, 5))
     entry_apellido = tk.Entry(registro_frame)
     entry_apellido.grid(row=1, column=1)
 
-    tk.Label(registro_frame, text="Email/Rol:").grid(row=2, column=0, pady=(0, 5))
+    tk.Label(registro_frame, text="Email/Rol:", bg="#000000", fg="white").grid(row=2, column=0, pady=(0, 5))
     entry_email_registro = tk.Entry(registro_frame)
     entry_email_registro.grid(row=2, column=1)
 
-    tk.Label(registro_frame, text="Contraseña:").grid(row=3, column=0, pady=(0, 5))
-    entry_contrasena_registro = tk.Entry(registro_frame, show="*")
+    tk.Label(registro_frame, text="Contraseña:", bg="#000000", fg="white").grid(row=3, column=0, pady=(0, 5))
+    entry_contrasena_registro = tk.Entry(registro_frame, show="*", bg="black", fg="white")
     entry_contrasena_registro.grid(row=3, column=1)
 
     # Botón para registrar al usuario
-    btn_registro = tk.Button(registro_frame, text="Registrarse", command=lambda: registrar_usuario(entry_nombre.get(), entry_email_registro.get(), entry_contrasena_registro.get(), entry_apellido.get()))
-    btn_registro.grid(row=4, columnspan=2, pady=10)
+    btn_registro = tk.Button(registro_frame, text="Registrarse", command=lambda: registrar_usuario(entry_nombre.get(), entry_email_registro.get(), entry_contrasena_registro.get(), entry_apellido.get()), bg="green", fg="white")
+    btn_registro.grid(row=6, columnspan=2, pady=10)
+
+    # Centrar la ventana de registro
+    centrar_ventana(registro_window)
+
+
+
+
 
 # Función para registrar un nuevo usuario
 def registrar_usuario(nombre, email, contrasena, apellido):
@@ -77,14 +85,17 @@ def registrar_usuario(nombre, email, contrasena, apellido):
     label_result_registro.config(text="Registro exitoso", fg="green")
     window.after(1500, destroy_open_registro_window)
 
-# funcion para destrior la ventana de registro una vez que se registra un usuario    
+
+# funcion para cerrar ventana de registro una vez completado el registro    
 def destroy_open_registro_window():
     registro_window.destroy()
 
-# Función para destruir la ventana actual y abrir una nueva ventana
+
+# Función para cerrar la ventana login y abrir una ventana principal
 def destroy_login_window():
     window.destroy()
     open_main_window()
+
 
 # Función para abrir la ventana principal
 def open_main_window():
@@ -128,10 +139,10 @@ def open_main_window():
     app_name_label.pack()
 
     # Botones de muestra en la barra lateral
-    button1 = tk.Button(nav_frame, text="Ver la foto del día", command=ver_foto_del_dia)
+    button1 = tk.Button(nav_frame, text="Astronomical Picture of the Day", command=ver_apod)
     button1.pack(pady=10)
 
-    button2 = tk.Button(nav_frame, text="Ver la foto de un dia X", command=solicitar_fecha)
+    button2 = tk.Button(nav_frame, text="Astronomical Picture of the Day at ", command=solicitar_fecha)
     button2.pack(pady=10)
 
 
@@ -151,32 +162,27 @@ def open_main_window():
     con PlanaryApp explorar el universo está al alcance de un click!""", font=("Helvetica", 20), fg="white", bg="#000000")
     label_welcome.pack(pady=10)
 
-    # Crear un Label para la foto del día
-    global label_foto_del_dia
-    label_foto_del_dia = tk.Label(container_frame)
-    label_foto_del_dia.pack(pady=10)
+    # Crear un Label para la foto del día   ########################################
+    global label_foto_apod
+    label_foto_apod = tk.Label(container_frame)
+    label_foto_apod.pack(pady=10)
 
     # Crear un Label para la descripción
     global label_descripcion
-    label_descripcion = tk.Label(container_frame, text="", font=("Helvetica", 12), fg="white", bg="#000000", wraplength=1000, justify="left")
+    label_descripcion = tk.Label(container_frame, text="", font=("Helvetica", 16), fg="white", bg="#000000", wraplength=400, justify="left")
     label_descripcion.pack(pady=10)
 
     # Puedes agregar más contenido a la nueva ventana aquí si es necesario
-
+    
+    
     # Iniciar el bucle principal de la nueva ventana
     main_window.mainloop()
 
 
-
-
-
-
-
-# funcion para ver la foto del dia
-def ver_foto_del_dia():
+def ver_apod():
     # Obtener los datos de la foto del día desde la API de la NASA
     api_key = "HLFsRfhi3gr2qxHdowAo6rjIr3xjUHtCdtcaDCk6"  # Coloca aquí tu clave de API
-    data = obtener_datos_foto_del_dia(api_key)
+    data = obtener_datos_apod(api_key)
 
     # Verificar si se obtuvieron los datos correctamente
     if data:
@@ -195,21 +201,32 @@ def ver_foto_del_dia():
             imagen = Image.open(BytesIO(image_data))
 
             # Ajustar la imagen al tamaño deseado (ancho, alto)
-            imagen = imagen.resize((400, 400))
+            imagen = imagen.resize((500, 500))
 
             # Convertir la imagen a un formato compatible con tkinter
             tk_imagen = ImageTk.PhotoImage(imagen)
 
             # Actualizar las etiquetas con los nuevos datos
             label_welcome.config(text=f"La foto del día es: {titulo}")
-            label_foto_del_dia.config(image=tk_imagen)
-            label_foto_del_dia.image = tk_imagen  # Evita que el recolector de basura elimine la imagen
+            label_foto_apod.config(image=tk_imagen)
+            label_foto_apod.image = tk_imagen  # Evita que el recolector de basura elimine la imagen
             label_descripcion.config(text=descripcion)
+
+            # Mover la etiqueta de bienvenida a la izquierda de la imagen
+            label_welcome.place(relx=0.20, rely=0.1, anchor="w")
+            label_foto_apod.place(relx=0.41, rely=0.5, anchor="w")  # Ajusta según tus necesidades
+            label_descripcion.place(relx=0.08, rely=0.5, anchor="w")  # Ajusta según tus necesidades
+
         except requests.exceptions.RequestException as e:
             print(f"Error al descargar la imagen: {e}")
             label_result.config(text="Error al descargar la imagen", fg="red")
     else:
         print("Error al obtener los datos de la foto del día")
+    
+ 
+
+    
+    
 
 
 # funcion para solicitar una fecha y ver la foto del dia de esa fecha
@@ -221,7 +238,12 @@ def solicitar_fecha():
     if fecha:
         # Llamar a la función con la fecha ingresada
         ver_foto_segun_fecha(fecha)
+        
+        
+        
 
+
+# Función para ver la Astronomic Picture of The Day segun una fecha dada
 def ver_foto_segun_fecha(fecha):
     # Obtener los datos de la foto del día desde la API de la NASA
     api_key = "HLFsRfhi3gr2qxHdowAo6rjIr3xjUHtCdtcaDCk6"  # Coloca aquí tu clave de API
@@ -242,25 +264,24 @@ def ver_foto_segun_fecha(fecha):
         imagen = Image.open(BytesIO(image_data))
 
         # Ajustar la imagen al tamaño deseado (ancho, alto)
-        imagen = imagen.resize((400, 400))
+        imagen = imagen.resize((500, 500))
 
         # Convertir la imagen a un formato compatible con tkinter
         tk_imagen = ImageTk.PhotoImage(imagen)
-
+        
+        label_welcome.place(relx=0.18, rely=0.07, anchor="w")
+        label_foto_apod.place(relx=0.41, rely=0.5, anchor="w")  
+        label_descripcion.place(relx=0.08, rely=0.5, anchor="w")
+        
         # Actualizar las etiquetas con los nuevos datos
         label_welcome.config(text=f"La foto del día ({fecha}): {titulo}")
-        label_foto_del_dia.config(image=tk_imagen)
-        label_foto_del_dia.image = tk_imagen  # Evita que el recolector de basura elimine la imagen
+        label_foto_apod.config(image=tk_imagen)
+        label_foto_apod.image = tk_imagen  # Evita que el recolector de basura elimine la imagen
         label_descripcion.config(text=descripcion)
 
     else:
         print("Error al obtener los datos de la foto del día")
-
-
-
-
-
-
+    
 
 
 # Función para centrar la ventana
@@ -298,7 +319,7 @@ login_frame.place(relx=0.2, rely=0.5, anchor="center")
 
 # Crear un estilo para ttk.Frame con fondo negro semi transparente y bordes redondeados
 style = ttk.Style()
-style.configure("TFrame", background="#000000", borderwidth=5, relief="flat")
+style.configure("TFrame", background="#00000080", borderwidth=5, relief="flat")
 login_frame = ttk.Frame(window, style="TFrame", padding=(20, 20))
 login_frame.place(relx=0.5, rely=0.5, anchor="center")
 
