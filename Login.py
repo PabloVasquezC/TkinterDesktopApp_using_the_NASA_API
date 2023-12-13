@@ -144,6 +144,9 @@ def open_main_window():
 
     button2 = tk.Button(nav_frame, text="Astronomical Picture of the Day at ", command=solicitar_fecha)
     button2.pack(pady=10)
+    
+
+
 
 
     # Crear un Label de bienvenida para el nombre de usuario
@@ -171,8 +174,8 @@ def open_main_window():
     global label_descripcion
     label_descripcion = tk.Label(container_frame, text="", font=("Helvetica", 16), fg="white", bg="#000000", wraplength=400, justify="left")
     label_descripcion.pack(pady=10)
+    
 
-    # Puedes agregar más contenido a la nueva ventana aquí si es necesario
     
     
     # Iniciar el bucle principal de la nueva ventana
@@ -211,19 +214,22 @@ def ver_apod():
             label_foto_apod.config(image=tk_imagen)
             label_foto_apod.image = tk_imagen  # Evita que el recolector de basura elimine la imagen
             label_descripcion.config(text=descripcion)
+    
+            
 
             # Mover la etiqueta de bienvenida a la izquierda de la imagen
             label_welcome.place(relx=0.20, rely=0.1, anchor="w")
-            label_foto_apod.place(relx=0.41, rely=0.5, anchor="w")  # Ajusta según tus necesidades
-            label_descripcion.place(relx=0.08, rely=0.5, anchor="w")  # Ajusta según tus necesidades
+            label_foto_apod.place(relx=0.41, rely=0.5, anchor="w")  
+            label_descripcion.place(relx=0.08, rely=0.5, anchor="w")  
+            
+            
+    
 
         except requests.exceptions.RequestException as e:
             print(f"Error al descargar la imagen: {e}")
             label_result.config(text="Error al descargar la imagen", fg="red")
     else:
         print("Error al obtener los datos de la foto del día")
-    
- 
 
     
     
@@ -239,6 +245,7 @@ def solicitar_fecha():
         # Llamar a la función con la fecha ingresada
         ver_foto_segun_fecha(fecha)
         
+
         
         
 
